@@ -1,0 +1,35 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: #fff;
+    position: fixed; /* Фиксированное позиционирование */
+    top: 0; /* Расположение вверху */
+    left: 0; /* Расположение слева (по умолчанию) */
+    right: 0; /* Расположение справа */
+    z-index: 1000; /* Очень высокий z-index для установки поверх других элементов */
+  }
+  
+  .navbar li {
+    list-style-type: none;
+    margin-right: 15px;
+  }
+  
+  .navbar a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .logout-button {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .logout-button:hover {
+    text-decoration: underline;
+  }
+  

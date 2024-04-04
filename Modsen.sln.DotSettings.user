@@ -1,0 +1,25 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=654c6519_002D98b4_002D4b82_002D9837_002D344b3491be5d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateAsync_InvalidArgument_ThrowsValidationException #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.EventServiceTests.CreateAsync_InvalidArgument_ThrowsValidationException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.EventRepositoryTests.GetByCategoryAsync_ReturnsCorrectEvents&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.EventRepositoryTests.GetByCategory_ReturnsCorrectEvents&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.EventServiceTests.CreateAsync_ValidArgument_ReturnsAddedEvent&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.EventServiceTests.GetAllAsync_ReturnsAllEvents&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.EventServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.AuthServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.EventRepositoryTests.GetByCategoryAsync_ReturnsMatchingEvents&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.EventRepositoryTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79550049_002D51f4_002D4dca_002D8cbf_002D4d24356bb89a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateAsync_InvalidArgument_ThrowsValidationException" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.EventServiceTests.CreateAsync_InvalidArgument_ThrowsValidationException&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=dd885f9e_002Db57f_002D41ee_002Db639_002D0242bccfc508/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="EventRepositoryTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.EventRepositoryTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.UserRepositoryTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
