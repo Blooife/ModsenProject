@@ -19,58 +19,39 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync([FromBody] RegistrationRequestDto model)
+    public async Task<IActionResult> RegisterAsync([FromBody] RegistrationRequestDto model, CancellationToken cancellationToken)
     {
-        var response = await _authService.RegisterAsync(model);
+        var response = await _authService.RegisterAsync(model, cancellationToken);
         return Ok(response);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] LoginRequestDto model)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginRequestDto model, CancellationToken cancellationToken)
     {
-        var response = await _authService.LoginAsync(model);
+        var response = await _authService.LoginAsync(model, cancellationToken);
         return Ok(response);
     }
     
     [HttpPost("assignRole")]
-    public async Task<IActionResult> AssignRoleAsync([FromBody] AssignRoleRequestDto model)
+    public async Task<IActionResult> AssignRoleAsync([FromBody] AssignRoleRequestDto model, CancellationToken cancellationToken)
     {
-        var response = await _authService.AssignRoleAsync(model.Email, model.Role.ToUpper());
+        var response = await _authService.AssignRoleAsync(model.Email, model.Role.ToUpper(), cancellationToken);
+
+        return Ok(response);
+    }
+    
+    [HttpPost("createRole")]
+    public async Task<IActionResult> CreateRoleAsync([FromBody] string roleName)
+    {
+        var response = await _authService.CreateRoleAsync(roleName);
 
         return Ok(response);
     }
     
     [HttpPost("refreshToken")]
-    public async Task<IActionResult> RefreshToken(RefreshTokenDto refreshToken)
+    public async Task<IActionResult> RefreshToken(RefreshTokenDto refreshToken, CancellationToken cancellationToken)
     {
-        var response = await _authService.RefreshToken(refreshToken.refreshToken);
-
-        return Ok(response);
-    }
-    
-    [HttpPost("registerOnEvent")]
-    [Authorize]
-    public async Task<IActionResult> RegisterUserOnEvent([FromBody] EventUserDto model)
-    {
-        var response = await _authService.RegisterUserOnEvent(model.userId, model.eventId);
-
-        return Ok(response);
-    }
-    
-    [HttpPost("unRegisterOnEvent")]
-    [Authorize]
-    public async Task<IActionResult> UnRegisterUserOnEvent([FromBody] EventUserDto model)
-    {
-        var response = await _authService.UnregisterUserOnEvent(model.userId, model.eventId);
-
-        return Ok(response);
-    }
-    
-    [HttpGet("getEvents/{id}")]
-    [Authorize]
-    public async Task<IActionResult> GetAllUserEvents(string id)
-    {
-        var response = await _authService.GetAllUserEvents(id);
+        var response = await _authService.RefreshToken(refreshToken.refreshToken, cancellationToken);
 
         return Ok(response);
     }

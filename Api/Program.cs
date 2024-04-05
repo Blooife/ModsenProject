@@ -40,6 +40,7 @@ app.UseCors(options => options
     .WithOrigins("http://localhost:3000")
     .AllowAnyHeader()
     .AllowAnyMethod()
+    .WithExposedHeaders("X-Pagination")
     .AllowCredentials());
 
 app.ApplyMigrations(app.Services);

@@ -1,6 +1,6 @@
 using Application.Exceptions;
 using Application.Models.Dtos;
-using Application.Servicies.Implementations;
+using Application.Services.Implementations;
 using Application.Servicies.Interfaces;
 using AutoMapper;
 using Domain.Models.Entities;
@@ -47,10 +47,10 @@ public class AuthServiceTests
 
             _mapperMock.Setup(mapper => mapper.Map<ApplicationUser>(dto)).Returns(user);
 
-            _unitOfWorkMock.Setup(uow => uow.UserRepository.GetByEmailAsync(dto.Email)).ReturnsAsync(user);
+            _unitOfWorkMock.Setup(uow => uow.UserRepository.GetByEmailAsync(dto.Email, CancellationToken.None)).ReturnsAsync(user);
 
             // Act
-            var result = await _authService.RegisterAsync(dto);
+            var result = await _authService.RegisterAsync(dto, CancellationToken.None);
 
             // Assert
             Assert.Equal("User registered successfully", result.Message);
@@ -65,13 +65,13 @@ public class AuthServiceTests
             var user = new ApplicationUser();
             var token = "test_token";
 
-            _unitOfWorkMock.Setup(uow => uow.UserRepository.GetByEmailAsync(dto.Email)).ReturnsAsync(user);
+            _unitOfWorkMock.Setup(uow => uow.UserRepository.GetByEmailAsync(dto.Email, CancellationToken.None)).ReturnsAsync(user);
             _unitOfWorkMock.Setup(uow => uow.UserRepository.CheckPasswordAsync(user, dto.Password)).ReturnsAsync(true);
             _unitOfWorkMock.Setup(uow => uow.UserRepository.GetRolesAsync(user)).ReturnsAsync(new List<string>());
             _jwtTokenGeneratorMock.Setup(generator => generator.GenerateToken(user, It.IsAny<IEnumerable<string>>())).Returns(token);
 
             // Act
-            var result = await _authService.LoginAsync(dto);
+            var result = await _authService.LoginAsync(dto, CancellationToken.None);
 
             // Assert
             Assert.Equal(token, result.Token);
@@ -85,12 +85,12 @@ public class AuthServiceTests
             var user = new ApplicationUser();
             var token = "test_token";
 
-            _unitOfWorkMock.Setup(uow => uow.UserRepository.GetByRefreshTokenAsync(refreshToken)).ReturnsAsync(user);
+            _unitOfWorkMock.Setup(uow => uow.UserRepository.GetByRefreshTokenAsync(refreshToken, CancellationToken.None)).ReturnsAsync(user);
             _unitOfWorkMock.Setup(uow => uow.UserRepository.GetRolesAsync(user)).ReturnsAsync(new List<string>());
             _jwtTokenGeneratorMock.Setup(generator => generator.GenerateToken(user, It.IsAny<IEnumerable<string>>())).Returns(token);
 
             // Act
-            var result = await _authService.RefreshToken(refreshToken);
+            var result = await _authService.RefreshToken(refreshToken, CancellationToken.None);
 
             // Assert
             Assert.Equal(token, result.Token);
@@ -103,10 +103,10 @@ public class AuthServiceTests
             var loginRequestDto = new LoginRequestDto { Email = "nonexistent@example.com", Password = "password" };
             ApplicationUser user = null;
 
-            _unitOfWorkMock.Setup(uow => uow.UserRepository.GetByEmailAsync(loginRequestDto.Email)).ReturnsAsync(user);
+            _unitOfWorkMock.Setup(uow => uow.UserRepository.GetByEmailAsync(loginRequestDto.Email, CancellationToken.None)).ReturnsAsync(user);
 
             // Act & Assert
-            await Assert.ThrowsAsync<LoginException>(async () => await _authService.LoginAsync(loginRequestDto));
+            await Assert.ThrowsAsync<LoginException>(async () => await _authService.LoginAsync(loginRequestDto, CancellationToken.None));
         }
         
         [Fact]
@@ -121,7 +121,7 @@ public class AuthServiceTests
                 .ReturnsAsync(validationResult);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ValidationException>(async () => await _authService.RegisterAsync(invalidDto));
+            await Assert.ThrowsAsync<ValidationException>(async () => await _authService.RegisterAsync(invalidDto, CancellationToken.None));
         }
 
         [Fact]
@@ -139,7 +139,7 @@ public class AuthServiceTests
                 .ReturnsAsync(registerResult);
 
             // Act & Assert
-            await Assert.ThrowsAsync<RegisterException>(async () => await _authService.RegisterAsync(validDto));
+            await Assert.ThrowsAsync<RegisterException>(async () => await _authService.RegisterAsync(validDto, CancellationToken.None));
         }
 
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PostService from "../services/post.service";
 import AuthService from "../services/auth.service";
 import { useNavigate, Link } from "react-router-dom";
-import { categoryOptions, placeOptions } from "./optionsData";
 import handleRefresh from './refresh';
 
 const AdminPage = () => {

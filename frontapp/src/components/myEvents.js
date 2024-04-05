@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import PostService from "../services/post.service";
 import AuthService from "../services/auth.service";
+import PostService from "../services/post.service";
 import { useNavigate, Link } from "react-router-dom";
 import handleRefresh from './refresh';
 
@@ -12,7 +12,7 @@ const Events = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    AuthService.getUsersEvents(user.user.id).then(
+    PostService.getUsersEvents(user.user.id).then(
       (response) => {
         setPrivatePosts(response.data);
       },
@@ -29,7 +29,7 @@ const Events = () => {
   const handleUnregister = (eventId) => async (e) => {
     e.preventDefault();
     try {
-      await AuthService.unregisterFromEvent(user.user.id, eventId).then(
+      await PostService.unregisterFromEvent(user.user.id, eventId).then(
         () => {
           setRefreshEvents((prev) => !prev); 
         },

@@ -14,40 +14,45 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _dbContext = dbContext;
     }
     
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return await _dbContext.Set<T>().AsNoTracking().ToListAsync();
+        return await _dbContext.Set<T>().AsNoTracking().ToListAsync(cancellationToken);
     }
     
-    public async Task<bool> Exists(string id)
+    public async Task<bool> Exists(string id, CancellationToken cancellationToken)
     {
-        var entity = await Get(id);
+        var entity = await Get(id, cancellationToken);
         return entity != null;
     }
     
-    public async Task<T?> Get(string id)
+    public async Task<T?> Get(string id, CancellationToken cancellationToken)
     {
-        return await _dbContext.Set<T>().FindAsync(id);
+        return await _dbContext.Set<T>().FindAsync(id, cancellationToken);
     }
 
-    public async Task<T?> GetByIdAsync(string id)
+    public async Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken)
     {
-        return await _dbContext.Set<T>().FindAsync(id);
+        return await _dbContext.Set<T>().FindAsync(id, cancellationToken);
     }
 
-    public async Task<T> CreateAsync(T entity)
+    public async Task<T> CreateAsync(T entity, CancellationToken cancellationToken)
     {
-        await _dbContext.AddAsync(entity);
+        await _dbContext.AddAsync(entity, cancellationToken);
         return entity;
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task UpdateAsync(T entity, CancellationToken cancellationToken)
     {
        _dbContext.Entry(entity).State = EntityState.Modified;
     }
 
-    public async Task DeleteAsync(T entity)
+    public async Task DeleteAsync(T entity, CancellationToken cancellationToken)
     {
         _dbContext.Set<T>().Remove(entity);
+    }
+    
+    public IQueryable<T> FindAll()
+    {
+        return this._dbContext.Set<T>();
     }
 }

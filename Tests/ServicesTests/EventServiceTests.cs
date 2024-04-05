@@ -1,6 +1,6 @@
 using Application.Exceptions;
 using Application.Models.Dtos;
-using Application.Servicies.Implementations;
+using Application.Services.Implementations;
 using Application.Servicies.Interfaces;
 using AutoMapper;
 using Domain.Models.Entities;
@@ -14,8 +14,6 @@ using Moq;
 using ValidationException = Application.Exceptions.ValidationException;
 
 namespace Tests.ServicesTests;
-
-[TestSubject(typeof(EventService))]
 public class EventServiceTests
 {
 
@@ -41,7 +39,7 @@ public class EventServiceTests
                 validator.ValidateAsync(It.IsAny<ValidationContext<EventRequestDto>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(validationResult);
 
-        Func<Task> actual = async () => await _eventService.CreateAsync(editorRequestDto);
+        Func<Task> actual = async () => await _eventService.CreateAsync(editorRequestDto, CancellationToken.None);
         
         await actual.Should().ThrowExactlyAsync<ValidationException>();
         _validatorMock.Verify(
@@ -63,12 +61,12 @@ public class EventServiceTests
                 validator.ValidateAsync(It.IsAny<ValidationContext<EventRequestDto>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult());
 
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.CreateAsync(It.IsAny<Event>()))
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.CreateAsync(It.IsAny<Event>(), CancellationToken.None))
             .ReturnsAsync(createdEvent);
         _unitOfWorkMock.Setup(uow => uow.Save()).Returns(Task.FromResult(1));
         
         // Act
-        var result = await _eventService.CreateAsync(eventRequestDto);
+        var result = await _eventService.CreateAsync(eventRequestDto, CancellationToken.None);
 
         // Assert
         result.Should().NotBeNull();
@@ -76,7 +74,7 @@ public class EventServiceTests
         _validatorMock.Verify(
             validator => validator.ValidateAsync(It.IsAny<ValidationContext<EventRequestDto>>(), It.IsAny<CancellationToken>()),
             Times.Once);
-        _unitOfWorkMock.Verify(uow => uow.EventRepository.CreateAsync(It.IsAny<Event>()), Times.Once);
+        _unitOfWorkMock.Verify(uow => uow.EventRepository.CreateAsync(It.IsAny<Event>(), CancellationToken.None), Times.Once);
         _unitOfWorkMock.Verify(uow => uow.Save(), Times.Once);
     }
     
@@ -85,10 +83,10 @@ public class EventServiceTests
     {
         // Arrange
         IEnumerable<Event> events = new List<Event>() { new Event(), new Event() };
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetAllAsync()).ReturnsAsync(events);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetAllAsync(CancellationToken.None)).ReturnsAsync(events);
 
         // Act
-        var result = await _eventService.GetAllAsync();
+        var result = await _eventService.GetAllAsync(CancellationToken.None);
 
         // Assert
         Assert.Equal(events, result);
@@ -100,10 +98,10 @@ public class EventServiceTests
         // Arrange
         string eventId = "1";
         Event expectedEvent = new Event();
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId)).ReturnsAsync(expectedEvent);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId, CancellationToken.None)).ReturnsAsync(expectedEvent);
 
         // Act
-        var result = await _eventService.GetByIdAsync(eventId);
+        var result = await _eventService.GetByIdAsync(eventId, CancellationToken.None);
 
         // Assert
         Assert.Equal(expectedEvent, result);
@@ -118,11 +116,11 @@ public class EventServiceTests
         _validatorMock.Setup(validator =>
                 validator.ValidateAsync(It.IsAny<ValidationContext<EventRequestDto>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new ValidationResult());
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.CreateAsync(It.IsAny<Event>())).ReturnsAsync(createdEvent);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.CreateAsync(It.IsAny<Event>(), CancellationToken.None)).ReturnsAsync(createdEvent);
         _unitOfWorkMock.Setup(uow => uow.Save()).Returns(Task.FromResult(1));
 
         // Act
-        var result = await _eventService.CreateAsync(dto);
+        var result = await _eventService.CreateAsync(dto, CancellationToken.None);
 
         // Assert
         Assert.Equal(createdEvent, result);
@@ -134,12 +132,12 @@ public class EventServiceTests
         // Arrange
         string eventId = "1";
         Event deletedEvent = new Event();
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId)).ReturnsAsync(deletedEvent);
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.DeleteAsync(deletedEvent)).Returns(Task.CompletedTask);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId, CancellationToken.None)).ReturnsAsync(deletedEvent);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.DeleteAsync(deletedEvent, CancellationToken.None)).Returns(Task.CompletedTask);
         _unitOfWorkMock.Setup(uow => uow.Save()).Returns(Task.FromResult(1));
 
         // Act
-        var result = await _eventService.DeleteAsync(eventId);
+        var result = await _eventService.DeleteAsync(eventId, CancellationToken.None);
 
         // Assert
         Assert.Equal(deletedEvent, result);
@@ -151,10 +149,10 @@ public class EventServiceTests
         // Arrange
         string eventId = "existingId";
         Event existingEvent = new Event();
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId)).ReturnsAsync(existingEvent);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId, CancellationToken.None)).ReturnsAsync(existingEvent);
 
         // Act
-        var result = await _eventService.GetByIdAsync(eventId);
+        var result = await _eventService.GetByIdAsync(eventId, CancellationToken.None);
 
         // Assert
         Assert.Equal(existingEvent, result);
@@ -165,10 +163,10 @@ public class EventServiceTests
     {
         // Arrange
         string eventId = "nonExistingId";
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId)).ReturnsAsync((Event)null);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId, CancellationToken.None)).ReturnsAsync((Event)null);
 
         // Act & Assert
-        await Assert.ThrowsAsync<NotFoundException>(async () => await _eventService.GetByIdAsync(eventId));
+        await Assert.ThrowsAsync<NotFoundException>(async () => await _eventService.GetByIdAsync(eventId, CancellationToken.None));
     }
 
     [Fact]
@@ -177,14 +175,14 @@ public class EventServiceTests
         // Arrange
         string eventId = "existingId";
         Event existingEvent = new Event();
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId)).ReturnsAsync(existingEvent);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId, CancellationToken.None)).ReturnsAsync(existingEvent);
 
         // Act
-        var result = await _eventService.DeleteAsync(eventId);
+        var result = await _eventService.DeleteAsync(eventId, CancellationToken.None);
 
         // Assert
         Assert.Equal(existingEvent, result);
-        _unitOfWorkMock.Verify(uow => uow.EventRepository.DeleteAsync(existingEvent), Times.Once);
+        _unitOfWorkMock.Verify(uow => uow.EventRepository.DeleteAsync(existingEvent, CancellationToken.None), Times.Once);
         _unitOfWorkMock.Verify(uow => uow.Save(), Times.Once);
     }
 
@@ -193,10 +191,10 @@ public class EventServiceTests
     {
         // Arrange
         string eventId = "nonExistingId";
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId)).ReturnsAsync((Event)null);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByIdAsync(eventId, CancellationToken.None)).ReturnsAsync((Event)null);
 
         // Act & Assert
-        await Assert.ThrowsAsync<NotFoundException>(async () => await _eventService.DeleteAsync(eventId));
+        await Assert.ThrowsAsync<NotFoundException>(async () => await _eventService.DeleteAsync(eventId, CancellationToken.None));
     }
 
     [Fact]
@@ -205,10 +203,10 @@ public class EventServiceTests
         // Arrange
         string eventName = "existingName";
         Event existingEvent = new Event();
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByNameAsync(eventName)).ReturnsAsync(existingEvent);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByNameAsync(eventName, CancellationToken.None)).ReturnsAsync(existingEvent);
 
         // Act
-        var result = await _eventService.GetByNameAsync(eventName);
+        var result = await _eventService.GetByNameAsync(eventName, CancellationToken.None);
 
         // Assert
         Assert.Equal(existingEvent, result);
@@ -219,10 +217,10 @@ public class EventServiceTests
     {
         // Arrange
         string eventName = "nonExistingName";
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByNameAsync(eventName)).ReturnsAsync((Event)null);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByNameAsync(eventName, CancellationToken.None)).ReturnsAsync((Event)null);
 
         // Act & Assert
-        await Assert.ThrowsAsync<NotFoundException>(async () => await _eventService.GetByNameAsync(eventName));
+        await Assert.ThrowsAsync<NotFoundException>(async () => await _eventService.GetByNameAsync(eventName, CancellationToken.None));
     }
 
     
@@ -233,10 +231,10 @@ public class EventServiceTests
         // Arrange
         string category = "existingCategory";
         IEnumerable<Event> events = new List<Event> { new Event(), new Event() };
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByCategoryAsync(category)).ReturnsAsync(events);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByCategoryAsync(category, CancellationToken.None)).ReturnsAsync(events);
 
         // Act
-        var result = await _eventService.GetByCategoryAsync(category);
+        var result = await _eventService.GetByCategoryAsync(category, CancellationToken.None);
 
         // Assert
         Assert.Equal(events, result);
@@ -247,10 +245,10 @@ public class EventServiceTests
     {
         // Arrange
         string category = "nonExistingCategory";
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByCategoryAsync(category)).ReturnsAsync(new List<Event>());
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByCategoryAsync(category, CancellationToken.None)).ReturnsAsync(new List<Event>());
 
         // Act
-        var result = await _eventService.GetByCategoryAsync(category);
+        var result = await _eventService.GetByCategoryAsync(category, CancellationToken.None);
 
         // Assert
         Assert.Empty(result);
@@ -262,10 +260,10 @@ public class EventServiceTests
         // Arrange
         string place = "existingPlace";
         IEnumerable<Event> events = new List<Event> { new Event(), new Event() };
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByPlaceAsync(place)).ReturnsAsync(events);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByPlaceAsync(place, CancellationToken.None)).ReturnsAsync(events);
 
         // Act
-        var result = await _eventService.GetByPlaceAsync(place);
+        var result = await _eventService.GetByPlaceAsync(place, CancellationToken.None);
 
         // Assert
         Assert.Equal(events, result);
@@ -276,10 +274,10 @@ public class EventServiceTests
     {
         // Arrange
         string place = "nonExistingPlace";
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByPlaceAsync(place)).ReturnsAsync(new List<Event>());
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByPlaceAsync(place, CancellationToken.None)).ReturnsAsync(new List<Event>());
 
         // Act
-        var result = await _eventService.GetByPlaceAsync(place);
+        var result = await _eventService.GetByPlaceAsync(place, CancellationToken.None);
 
         // Assert
         Assert.Empty(result);
@@ -291,10 +289,10 @@ public class EventServiceTests
         // Arrange
         DateTime date = DateTime.UtcNow;
         IEnumerable<Event> events = new List<Event> { new Event(), new Event() };
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByDateAsync(date)).ReturnsAsync(events);
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByDateAsync(date, CancellationToken.None)).ReturnsAsync(events);
 
         // Act
-        var result = await _eventService.GetByDateAsync(date);
+        var result = await _eventService.GetByDateAsync(date, CancellationToken.None);
 
         // Assert
         Assert.Equal(events, result);
@@ -305,10 +303,10 @@ public class EventServiceTests
     {
         // Arrange
         DateTime date = DateTime.UtcNow;
-        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByDateAsync(date)).ReturnsAsync(new List<Event>());
+        _unitOfWorkMock.Setup(uow => uow.EventRepository.GetByDateAsync(date, CancellationToken.None)).ReturnsAsync(new List<Event>());
 
         // Act
-        var result = await _eventService.GetByDateAsync(date);
+        var result = await _eventService.GetByDateAsync(date, CancellationToken.None);
 
         // Assert
         Assert.Empty(result);

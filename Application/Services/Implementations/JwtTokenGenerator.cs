@@ -7,7 +7,7 @@ using Domain.Models.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Application.Servicies.Implementations;
+namespace Application.Services.Implementations;
 
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
@@ -39,7 +39,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             Issuer = _jwtOptions.Issuer,
             Subject = new ClaimsIdentity(claimList),
             IssuedAt = DateTime.UtcNow,
-            Expires = DateTime.UtcNow.AddMinutes(60),
+            Expires = _jwtOptions.Expires,
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
         };
 

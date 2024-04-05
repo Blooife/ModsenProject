@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import PostService from "../services/post.service";
 import AuthService from "../services/auth.service";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import handleRefresh from './refresh';
 
 const EventDetails = () => {
@@ -57,7 +57,7 @@ const EventDetails = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await AuthService.registerOnEvent(user.user.id, id).then(
+      await PostService.registerOnEvent(user.user.id, id).then(
        ()=>{
         alert('You registered successfully!');
         window.location.reload();

@@ -14,7 +14,9 @@ public static class DependencyInjection
     {
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection")).UseExceptionProcessor());
+                configuration.GetConnectionString("DefaultConnection"))
+                .UseExceptionProcessor()
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
         
         
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

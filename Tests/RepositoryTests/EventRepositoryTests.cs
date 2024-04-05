@@ -36,7 +36,7 @@ public class EventRepositoryTests
             .Returns(MockDbSet(events).Object);
 
         // Act
-        var result = await _eventRepository.GetByCategoryAsync(category);
+        var result = await _eventRepository.GetByCategoryAsync(category, CancellationToken.None);
 
         // Assert
         Assert.NotNull(result);
@@ -59,7 +59,7 @@ public class EventRepositoryTests
             .Returns(MockDbSet(events).Object);
 
         // Act
-        var result = await _eventRepository.GetByPlaceAsync(place);
+        var result = await _eventRepository.GetByPlaceAsync(place, CancellationToken.None);
 
         // Assert
         Assert.NotNull(result);
@@ -82,7 +82,7 @@ public class EventRepositoryTests
             .Returns(MockDbSet(events).Object);
 
         // Act
-        var result = await _eventRepository.GetByDateAsync(date);
+        var result = await _eventRepository.GetByDateAsync(date, CancellationToken.None);
 
         // Assert
         Assert.NotNull(result);
@@ -105,7 +105,7 @@ public class EventRepositoryTests
             .Returns(MockDbSet(events).Object);
 
         // Act
-        var result = await _eventRepository.GetByNameAsync(name);
+        var result = await _eventRepository.GetByNameAsync(name, CancellationToken.None);
 
         // Assert
         Assert.NotNull(result);
@@ -116,14 +116,14 @@ public class EventRepositoryTests
         public async Task GetByIdAsync_ReturnsEvent()
         {
             // Arrange
-            string id = "1";
+            string id = "-1";
             Event expectedEvent = new Event { Id = id, Name = "Test Event" };
 
-            _dbContextMock.Setup(x => x.Set<Event>().FindAsync(id))
+            _dbContextMock.Setup(x => x.Set<Event>().FindAsync(id, CancellationToken.None))
                 .ReturnsAsync(expectedEvent);
 
             // Act
-            var result = await _eventRepository.GetByIdAsync(id);
+            var result = await _eventRepository.GetByIdAsync(id, CancellationToken.None);
 
             // Assert
             Assert.NotNull(result);

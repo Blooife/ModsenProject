@@ -23,9 +23,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432; Database=modsen;Username=postgres;Password=postgres")
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            
     }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,27 +35,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     
     public virtual async Task<int> SaveChangesAsync()
     {
-        ChangeTracker.DetectChanges();
-
-        var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
-
-        foreach (var entry in entries)
-        {
-            // Логика для BeforeSave
-            if (entry.Entity is Event entity)
-            {
-                // Ваша логика перед сохранением для сущности YourEntity
-            }
-        }
-
-        foreach (var entry in entries)
-        {
-            // Логика для AfterSave
-            if (entry.Entity is EventsUsers entity)
-            {
-                // Ваша логика после сохранения для сущности YourEntity
-            }
-        }
         var result = await base.SaveChangesAsync();
 
         return result;

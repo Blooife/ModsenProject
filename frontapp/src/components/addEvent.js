@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PostService from "../services/post.service";
 import handleRefresh from './refresh';
 import AuthService from "../services/auth.service";

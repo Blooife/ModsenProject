@@ -8,10 +8,13 @@ import handleRefresh from './refresh';
 const Events = () => {
   const [privatePosts, setPrivatePosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(3); 
+  const [currentPage, setCurrentPage] = useState(1); 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedPlace, setSelectedPlace] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const pageSize = 2;
 
   const user = AuthService.getCurrentUser();
   const navigate = useNavigate();
@@ -19,31 +22,23 @@ const Events = () => {
   useEffect(() => {
     console.log(user);
     const fetchPosts = async () => {
-      await PostService.getAllEvents().then(
-        (response)=>{
-          setPrivatePosts(response.data);
-        },
-        async (error)=>{
-          if (error.response == null) {
-            handleRefresh(user, navigate);
-          }
-        }      
-    )};       
+      await getEventsWithPagination(currentPage);
+    };       
     fetchPosts();
-  }, [navigate]);
+  }, [currentPage]);
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = privatePosts.slice(indexOfFirstPost, indexOfLastPost);
-
-  const filterPosts = (posts, term) => {
-    if (!term) {
-      return posts;
-    }
-
-    return posts.filter((post) =>
-      post.name.toLowerCase().includes(term.toLowerCase())
-    );
+  const getEventsWithPagination = async (page) => {
+    await PostService.getPagedEvents( page, pageSize ).then(
+      (response)=>{
+        setPrivatePosts(response.data);
+        setTotalPages(response.headers['x-pagination'] ? JSON.parse(response.headers['x-pagination']).TotalPages : 1);
+        setTotalItems(response.headers['x-pagination'] ? JSON.parse(response.headers['x-pagination']).TotalCount : 0);},
+      (error)=>{
+        if (error.response == null) {
+          handleRefresh(user, navigate);
+        }
+      }  
+    )    
   };
 
   const handleCategoryChange = (e) => {
@@ -53,52 +48,25 @@ const Events = () => {
   const handlePlaceChange = (e) => {
     setSelectedPlace(e.target.value);
   };
-  
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     setCurrentPage(1); 
   };
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
 
   const applyFilters = async(category, place) => {
-     await PostService.getFilteredEvents(category, place).then(
-      (response)=>{
-        setPrivatePosts(response.data);
-        console.log(response);
-      },
-      (error)=>{
-        if (error.response == null) {
-          handleRefresh(user, navigate);
-        }
-      }
-    ).catch(err=>{
-      
-    });
-    };      
-
-  
-
-  const handleDelete = async (postId) => {
-    try {
-      await PostService.deleteEvent(postId).then(
-        (response)=>{
-          const updatedPosts = privatePosts.filter((post) => post.id !== postId);
-          setPrivatePosts(updatedPosts);
-          alert("You deleted event successfully");
-        },
-        (error)=>{
-          if (error.response == null) {
-            handleRefresh(user, navigate);
-          }else{
-            alert(error.response.data['ErrorMessage']);
-          }          
-        }
-      )       
-    } catch (error) {
-      console.error("Error deleting event:", error);
-    }
+    setCurrentPage(1); // Сбрасываем текущую страницу при применении фильтров
+    const response = await PostService.getFilteredEvents(category, place, user.accessToken);
+    setPrivatePosts(response.data);
+    setTotalPages(response.headers['x-Pagination'] ? JSON.parse(response.headers['x-Pagination']).TotalPages : 1);
+    setTotalItems(response.headers['x-Pagination'] ? JSON.parse(response.headers['x-Pagination']).TotalCount : 0);
+    console.log(totalPages+"ldldl");
   };
 
   return (
@@ -132,7 +100,7 @@ const Events = () => {
         </div>
         
         <div className="row row-cols-1 row-cols-md-3 g-4">
-          {filterPosts(currentPosts, searchTerm).map((post) => (
+          {privatePosts.map((post) => (
             <div className="col" key={post.id}>
               <div className="card border-primary">
                 <div className="card-header">
@@ -151,8 +119,9 @@ const Events = () => {
             </div>
           ))}
         </div>
+        {/* Пагинация */}
         <ul className="pagination justify-content-center">
-          {Array.from({ length: Math.ceil(privatePosts.length / postsPerPage) }, (_, i) => (
+          {Array.from({ length: totalPages }, (_, i) => (
             <li className={`page-item ${currentPage === i + 1 ? 'active' : ''}`} key={i}>
               <button className="page-link" onClick={() => paginate(i + 1)}>{i + 1}</button>
             </li>

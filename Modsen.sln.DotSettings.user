@@ -21,5 +21,7 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.EventRepositoryTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.UserRepositoryTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.AuthServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.EventServiceTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

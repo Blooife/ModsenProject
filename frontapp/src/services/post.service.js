@@ -1,8 +1,5 @@
 import axios from "axios";
 import authHeader from "./auth-header";
-import handleRefresh from '../components/refresh';
-import { useNavigate, Link } from "react-router-dom";
-import AuthService from './auth.service';
 
 const baseURL = "http://localhost:5152";
 
@@ -62,6 +59,52 @@ const uploadPicture = (formDataWithImage) => {
   });
 };
 
+const registerOnEvent = (userId, eventId) => {
+  return axios
+    .post(baseURL + API_URL + "events/registerOnEvent/",  { userId, eventId}, { headers: authHeader() } )
+    .then((response) => {
+      
+      return response;
+    }).catch((error) => {
+      throw error; 
+    });
+};
+
+const unregisterFromEvent = (userId, eventId) => {
+  console.log(eventId);
+  return axios
+    .post(baseURL + API_URL + "events/unRegisterOnEvent/",  { userId, eventId }, { headers: authHeader() })
+    .then((response) => {
+      
+      return response;
+    }).catch((error) => {
+      throw error; 
+    });
+};
+
+const getUsersEvents = (userId) => {
+  return axios
+    .get(baseURL + API_URL + "events/getEvents/"+userId, { headers: authHeader() })
+    .then((response) => {
+      
+      return response;
+    }).catch((error) => {
+      throw error; 
+    });
+};
+
+const getPagedEvents = (pageNumber, pageSize) => {
+  return axios
+    .post(baseURL + API_URL + "events/getPagedEvents",  { pageNumber, pageSize }, { headers: authHeader() })
+    .then((response) => {     
+      return response;
+    }).catch((error) => {
+      throw error; 
+    });
+};
+
+
+
 
 const postService = {
   getAllEvents,
@@ -71,6 +114,10 @@ const postService = {
   deleteEvent,
   getFilteredEvents,
   uploadPicture,
+  registerOnEvent,
+  unregisterFromEvent,
+  getUsersEvents,
+  getPagedEvents,
 };
 
 export default postService;

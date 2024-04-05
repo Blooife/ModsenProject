@@ -1,5 +1,7 @@
 ﻿using Application.Exceptions;
 using System.Net;
+using EntityFramework.Exceptions.Common;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Api.Middleware
@@ -25,7 +27,7 @@ namespace Api.Middleware
         private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
+            HttpStatusCode statusCode;
             string result = JsonConvert.SerializeObject(new ErrorDetails 
             { 
                 ErrorMessage = exception.Message, 
@@ -57,6 +59,12 @@ namespace Api.Middleware
                     statusCode = HttpStatusCode.BadRequest;
                     break;
                 case ImageUploadException imageUploadException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    break;
+                case CreateRoleException createRoleException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    break;
+                case DbUpdateException dbUpdateException:
                     statusCode = HttpStatusCode.BadRequest;
                     break;
                 default:

@@ -17,3 +17,4 @@ D:\RiderProjects\Modsen\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 D:\RiderProjects\Modsen\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
 D:\RiderProjects\Modsen\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
 D:\RiderProjects\Modsen\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
+D:\RiderProjects\Modsen\infrastructure\obj\Debug\net8.0\Infrastructure.sourcelink.json

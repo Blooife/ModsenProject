@@ -178,3 +178,4 @@ D:\RiderProjects\Modsen\Tests\bin\Debug\net8.0\EFCore.Toolkit.dll
 D:\RiderProjects\Modsen\Tests\bin\Debug\net8.0\EFCore.Toolkit.Abstractions.dll
 D:\RiderProjects\Modsen\Tests\bin\Debug\net8.0\MockQueryable.Core.dll
 D:\RiderProjects\Modsen\Tests\bin\Debug\net8.0\MockQueryable.EntityFrameworkCore.dll
+D:\RiderProjects\Modsen\Tests\obj\Debug\net8.0\Tests.sourcelink.json
