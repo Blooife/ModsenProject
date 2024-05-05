@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\RiderProjects\\Modsen\\Api\\Api.csproj": {}
+    "D:\\RiderProjects\\Modsen2\\Modsen\\Api\\Api.csproj": {}
   },
   "projects": {
-    "D:\\RiderProjects\\Modsen\\Api\\Api.csproj": {
+    "D:\\RiderProjects\\Modsen2\\Modsen\\Api\\Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RiderProjects\\Modsen\\Api\\Api.csproj",
+        "projectUniqueName": "D:\\RiderProjects\\Modsen2\\Modsen\\Api\\Api.csproj",
         "projectName": "Api",
-        "projectPath": "D:\\RiderProjects\\Modsen\\Api\\Api.csproj",
+        "projectPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Api\\Api.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\RiderProjects\\Modsen\\Api\\obj\\",
+        "outputPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,11 +32,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\RiderProjects\\Modsen\\Application\\Application.csproj": {
-                "projectPath": "D:\\RiderProjects\\Modsen\\Application\\Application.csproj"
+              "D:\\RiderProjects\\Modsen2\\Modsen\\Application\\Application.csproj": {
+                "projectPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Application\\Application.csproj"
               },
-              "D:\\RiderProjects\\Modsen\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "D:\\RiderProjects\\Modsen\\Infrastructure\\Infrastructure.csproj"
+              "D:\\RiderProjects\\Modsen2\\Modsen\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -93,18 +93,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\RiderProjects\\Modsen\\Application\\Application.csproj": {
+    "D:\\RiderProjects\\Modsen2\\Modsen\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RiderProjects\\Modsen\\Application\\Application.csproj",
+        "projectUniqueName": "D:\\RiderProjects\\Modsen2\\Modsen\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "D:\\RiderProjects\\Modsen\\Application\\Application.csproj",
+        "projectPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\RiderProjects\\Modsen\\Application\\obj\\",
+        "outputPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -125,8 +125,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\RiderProjects\\Modsen\\Domain\\Domain.csproj": {
-                "projectPath": "D:\\RiderProjects\\Modsen\\Domain\\Domain.csproj"
+              "D:\\RiderProjects\\Modsen2\\Modsen\\Domain\\Domain.csproj": {
+                "projectPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Domain\\Domain.csproj"
               }
             }
           }
@@ -153,6 +153,18 @@
               "target": "Package",
               "version": "[11.9.0, )"
             },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.2.0, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
             "Microsoft.AspNetCore.Http.Features": {
               "target": "Package",
               "version": "[5.0.17, )"
@@ -178,18 +190,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\RiderProjects\\Modsen\\Domain\\Domain.csproj": {
+    "D:\\RiderProjects\\Modsen2\\Modsen\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RiderProjects\\Modsen\\Domain\\Domain.csproj",
+        "projectUniqueName": "D:\\RiderProjects\\Modsen2\\Modsen\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "D:\\RiderProjects\\Modsen\\Domain\\Domain.csproj",
+        "projectPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\RiderProjects\\Modsen\\Domain\\obj\\",
+        "outputPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -243,18 +255,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\RiderProjects\\Modsen\\Infrastructure\\Infrastructure.csproj": {
+    "D:\\RiderProjects\\Modsen2\\Modsen\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\RiderProjects\\Modsen\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "D:\\RiderProjects\\Modsen2\\Modsen\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "D:\\RiderProjects\\Modsen\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "D:\\RiderProjects\\Modsen\\Infrastructure\\obj\\",
+        "outputPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -275,8 +287,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\RiderProjects\\Modsen\\Application\\Application.csproj": {
-                "projectPath": "D:\\RiderProjects\\Modsen\\Application\\Application.csproj"
+              "D:\\RiderProjects\\Modsen2\\Modsen\\Application\\Application.csproj": {
+                "projectPath": "D:\\RiderProjects\\Modsen2\\Modsen\\Application\\Application.csproj"
               }
             }
           }
@@ -342,7 +354,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,5 +1,21 @@
 using Application.Models.Dtos;
 using Application.Servicies.Interfaces;
+using Application.UseCases.EventUseCases.CreateEvent;
+using Application.UseCases.EventUseCases.DeleteEvent;
+using Application.UseCases.EventUseCases.GetAllEvents;
+using Application.UseCases.EventUseCases.GetAllUserEvents;
+using Application.UseCases.EventUseCases.GetEventByCategory;
+using Application.UseCases.EventUseCases.GetEventByDate;
+using Application.UseCases.EventUseCases.GetEventById;
+using Application.UseCases.EventUseCases.GetEventByName;
+using Application.UseCases.EventUseCases.GetEventByPlace;
+using Application.UseCases.EventUseCases.GetFilteredEvents;
+using Application.UseCases.EventUseCases.GetPagedEvents;
+using Application.UseCases.EventUseCases.RegisterUserOnEvent;
+using Application.UseCases.EventUseCases.UnRegisterUserOnEvent;
+using Application.UseCases.EventUseCases.UpdateEvent;
+using Application.UseCases.EventUseCases.UploadPicture;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -10,61 +26,61 @@ namespace Api.Controllers;
 [Route("api/v1/events")]
 public class EventController : ControllerBase
 {
-    private readonly IEventService _eventService;
+    private readonly IMediator _mediator;
 
-    public EventController(IEventService eventService)
+    public EventController(IMediator mediator)
     {
-        _eventService = eventService;
+        _mediator = mediator;
     }
     
     [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetEvents(CancellationToken cancellationToken)
     {
-        var events = await _eventService.GetAllAsync(cancellationToken);
-        return Ok(events);
+        var events = await _mediator.Send(new GetAllEventsRequest(), cancellationToken);
+        return Ok(events.Events);
     }
     
     [HttpPost("getPagedEvents")]
     [Authorize]
-    public async Task<IActionResult> GetPagedEvents([FromBody] PageParams pageParams, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetPagedEvents([FromBody] GetPagedEventsRequest pageParams, CancellationToken cancellationToken)
     {
-        var events = await _eventService.GetPagedEvents(pageParams, cancellationToken);
+        var res = await _mediator.Send(pageParams, cancellationToken);
         var metadata = new
         {
-            events.TotalCount,
-            events.PageSize,
-            events.CurrentPage,
-            events.TotalPages,
-            events.HasNext,
-            events.HasPrevious
+            res.events.TotalCount,
+            res.events.PageSize,
+            res.events.CurrentPage,
+            res.events.TotalPages,
+            res.events.HasNext,
+            res.events.HasPrevious
         };
 
         HttpContext.Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata));
-        return Ok(events);
+        return Ok(res.events);
     }
     
     [HttpGet("{id}")]
     [Authorize]
     public async Task<IActionResult> GetEventById(string id, CancellationToken cancellationToken)
     {
-        var ev = await _eventService.GetByIdAsync(id, cancellationToken);
+        var ev = await _mediator.Send(new GetEventByIdRequest(id), cancellationToken);
         return Ok(ev);
     }
-
+    
     [HttpPost]
     [Authorize(Roles = "ADMIN")]
-    public async Task<IActionResult> CreateEvent([FromBody] EventRequestDto post, CancellationToken cancellationToken)
+    public async Task<IActionResult> CreateEvent([FromBody] CreateEventRequest post, CancellationToken cancellationToken)
     {
-        var createdEvent = await _eventService.CreateAsync(post, cancellationToken);
+        var createdEvent = await _mediator.Send(post, cancellationToken);
         return CreatedAtAction(nameof(CreateEvent), new { id = createdEvent.Id }, createdEvent);
     }
 
     [HttpPut]
     [Authorize(Roles = "ADMIN")]
-    public async Task<IActionResult> UpdateEvent([FromBody] EventRequestDto post, CancellationToken cancellationToken)
+    public async Task<IActionResult> UpdateEvent([FromBody] UpdateEventRequest post, CancellationToken cancellationToken)
     {
-        var updatedEvent = await _eventService.UpdateAsync(post, cancellationToken);
+        var updatedEvent = await _mediator.Send(post, cancellationToken);
         return Ok(updatedEvent);
     }
 
@@ -72,7 +88,7 @@ public class EventController : ControllerBase
     [Authorize(Roles = "ADMIN")]
     public async Task<IActionResult> DeleteEvent(string id, CancellationToken cancellationToken)
     {
-        await _eventService.DeleteAsync(id, cancellationToken);
+        await _mediator.Send(new DeleteEventRequest(id), cancellationToken);
         return NoContent();
     }
     
@@ -80,7 +96,7 @@ public class EventController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetEventByName(string name, CancellationToken cancellationToken)
     {
-        var ev = await _eventService.GetByNameAsync(name, cancellationToken);
+        var ev = await _mediator.Send(new GetEventByNameRequest(name), cancellationToken);
         return Ok(ev);
     }
     
@@ -88,7 +104,7 @@ public class EventController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetEventsByCategory(string category, CancellationToken cancellationToken)
     {
-        var ev = await _eventService.GetByCategoryAsync(category, cancellationToken);
+        var ev = await _mediator.Send(new GetEventByCategoryRequest(category), cancellationToken);
         return Ok(ev);
     }
     
@@ -96,48 +112,48 @@ public class EventController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetEventsByPlace(string place, CancellationToken cancellationToken)
     {
-        var ev = await _eventService.GetByPlaceAsync(place, cancellationToken);
+        var ev = await _mediator.Send(new GetEventByPlaceRequest(place), cancellationToken);
         return Ok(ev);
     }
     
     [HttpGet("getByDate/{date}")]
     [Authorize]
-    public async Task<IActionResult> GetEventsByDate(DateTime date, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetEventsByDate(GetEventByDateRequest date, CancellationToken cancellationToken)
     {
-        var ev = await _eventService.GetByDateAsync(date, cancellationToken);
+        var ev = await _mediator.Send(date, cancellationToken);
         return Ok(ev);
     }
     
     [HttpPost("getFilteredEvents")]
     [Authorize]
-    public async Task<IActionResult> GetFilteredEvents([FromBody] FiltersRequestDto filters, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetFilteredEvents([FromBody] GetFilteredEventsRequest filters, CancellationToken cancellationToken)
     {
-        var events = await _eventService.GetFilteredEventsAsync(filters, cancellationToken);
-        return Ok(events);
+        var events = await _mediator.Send(filters, cancellationToken);
+        return Ok(events.events);
     }
     
     [HttpPost("upload")]
     [Authorize(Roles = "ADMIN")]
     public async Task<object> UploadPicture([FromForm] IFormFile file, [FromForm]string eventId, CancellationToken cancellationToken)
     {
-        var response = await _eventService.UploadPictureAsync(file, eventId, cancellationToken);
+        var response = await _mediator.Send(new UploadPictureRequest(file, eventId), cancellationToken);
         return Ok(response.Message);
     }
     
     [HttpPost("registerOnEvent")]
     [Authorize]
-    public async Task<IActionResult> RegisterUserOnEvent([FromBody] EventUserDto model, CancellationToken cancellationToken)
+    public async Task<IActionResult> RegisterUserOnEvent([FromBody] RegisterUserOnEventRequest model, CancellationToken cancellationToken)
     {
-        var response = await _eventService.RegisterUserOnEvent(model.userId, model.eventId, cancellationToken);
+        var response = await _mediator.Send(model, cancellationToken);
 
         return Ok(response);
     }
     
     [HttpPost("unRegisterOnEvent")]
     [Authorize]
-    public async Task<IActionResult> UnRegisterUserOnEvent([FromBody] EventUserDto model, CancellationToken cancellationToken)
+    public async Task<IActionResult> UnRegisterUserOnEvent([FromBody] UnRegisterUserOnEventRequest model, CancellationToken cancellationToken)
     {
-        var response = await _eventService.UnregisterUserOnEvent(model.userId, model.eventId, cancellationToken);
+        var response = await _mediator.Send(model, cancellationToken);
 
         return Ok(response);
     }
@@ -146,8 +162,8 @@ public class EventController : ControllerBase
     [Authorize]
     public async Task<IActionResult> GetAllUserEvents(string id, CancellationToken cancellationToken)
     {
-        var response = await _eventService.GetAllUserEvents(id, cancellationToken);
+        var response = await _mediator.Send(new GetAllUserEventsRequest(id), cancellationToken);
 
-        return Ok(response);
+        return Ok(response.events);
     }
 }

@@ -1,6 +1,7 @@
 using Api;
 using Api.Middleware;
 using Application;
+using Application.UseCases.EventUseCases.CreateEvent;
 using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,6 @@ builder.Services.AddControllers();
 builder.Services.ConfigureApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.ConfigureExtra(builder.Configuration);
-
 var app = builder.Build();
 
 

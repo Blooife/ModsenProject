@@ -1,5 +1,4 @@
 import axios from "axios";
-import authHeader from "./auth-header";
 
 const baseURL = "http://localhost:5152";
 
@@ -60,49 +59,12 @@ const register = (formData) => {
     });
 };
 
-const getUsersEvents = (userId) => {
-  return axios
-    .get(baseURL + API_URL + "/getEvents/"+userId, { headers: authHeader() })
-    .then((response) => {
-      
-      return response;
-    }).catch((error) => {
-      throw error; 
-    });
-};
-
-const registerOnEvent = (userId, eventId) => {
-  return axios
-    .post(baseURL + API_URL + "/registerOnEvent/",  { userId, eventId}, { headers: authHeader() } )
-    .then((response) => {
-      
-      return response;
-    }).catch((error) => {
-      throw error; 
-    });
-};
-
-const unregisterFromEvent = (userId, eventId) => {
-  console.log(eventId);
-  return axios
-    .post(baseURL + API_URL + "/unRegisterOnEvent/",  { userId, eventId }, { headers: authHeader() })
-    .then((response) => {
-      
-      return response;
-    }).catch((error) => {
-      throw error; 
-    });
-};
-
 const authService = {
   login,
   loginWithRefreshToken,
   logout,
   getCurrentUser,
   register,
-  getUsersEvents,
-  registerOnEvent,
-  unregisterFromEvent,
 };
 
 export default authService;

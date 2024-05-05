@@ -1,5 +1,4 @@
 import AuthService from "../services/auth.service"; 
-import { useNavigate } from 'react-router-dom'; 
 
 const handleRefresh = async (user, navigate) => {  
   console.log("here");

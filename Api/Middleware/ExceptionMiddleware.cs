@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Api.Middleware
 {
-    public class ExceptionMiddleware
+    public class ExceptionMiddleware 
     {
         private readonly RequestDelegate _next;
         public ExceptionMiddleware(RequestDelegate next)

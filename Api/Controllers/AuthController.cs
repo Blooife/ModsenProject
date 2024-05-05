@@ -1,8 +1,9 @@
-using System.Security.Claims;
-using Application.Models.Dtos;
-using Application.Servicies.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.CookiePolicy;
+using Application.UseCases.AuthUseCases.AssignRole;
+using Application.UseCases.AuthUseCases.CreateRole;
+using Application.UseCases.AuthUseCases.Login;
+using Application.UseCases.AuthUseCases.RefreshToken;
+using Application.UseCases.AuthUseCases.Register;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers;
@@ -11,31 +12,31 @@ namespace Api.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthService _authService;
+    private readonly IMediator _mediator;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IMediator mediator)
     {
-        _authService = authService;
+        _mediator = mediator;
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> RegisterAsync([FromBody] RegistrationRequestDto model, CancellationToken cancellationToken)
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest model, CancellationToken cancellationToken)
     {
-        var response = await _authService.RegisterAsync(model, cancellationToken);
+        var response = await _mediator.Send(model, cancellationToken);
         return Ok(response);
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] LoginRequestDto model, CancellationToken cancellationToken)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginRequest model, CancellationToken cancellationToken)
     {
-        var response = await _authService.LoginAsync(model, cancellationToken);
+        var response = await _mediator.Send(model, cancellationToken);
         return Ok(response);
     }
     
     [HttpPost("assignRole")]
-    public async Task<IActionResult> AssignRoleAsync([FromBody] AssignRoleRequestDto model, CancellationToken cancellationToken)
+    public async Task<IActionResult> AssignRoleAsync([FromBody] AssignRoleRequest model, CancellationToken cancellationToken)
     {
-        var response = await _authService.AssignRoleAsync(model.Email, model.Role.ToUpper(), cancellationToken);
+        var response = await _mediator.Send(model, cancellationToken);
 
         return Ok(response);
     }
@@ -43,15 +44,15 @@ public class AuthController : ControllerBase
     [HttpPost("createRole")]
     public async Task<IActionResult> CreateRoleAsync([FromBody] string roleName)
     {
-        var response = await _authService.CreateRoleAsync(roleName);
+        var response = await _mediator.Send(new CreateRoleRequest(roleName));
 
         return Ok(response);
     }
     
     [HttpPost("refreshToken")]
-    public async Task<IActionResult> RefreshToken(RefreshTokenDto refreshToken, CancellationToken cancellationToken)
+    public async Task<IActionResult> RefreshToken(RefreshTokenRequest refreshToken, CancellationToken cancellationToken)
     {
-        var response = await _authService.RefreshToken(refreshToken.refreshToken, cancellationToken);
+        var response = await _mediator.Send(refreshToken, cancellationToken);
 
         return Ok(response);
     }

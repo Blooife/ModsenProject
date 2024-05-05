@@ -12,16 +12,18 @@
     &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.EventRepositoryTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79550049_002D51f4_002D4dca_002D8cbf_002D4d24356bb89a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="CreateAsync_InvalidArgument_ThrowsValidationException" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=79550049_002D51f4_002D4dca_002D8cbf_002D4d24356bb89a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreateAsync_InvalidArgument_ThrowsValidationException" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.EventServiceTests.CreateAsync_InvalidArgument_ThrowsValidationException&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.UseCasesTests.EventUseCasesTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.UseCasesTests.AuthUseCasesTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=dd885f9e_002Db57f_002D41ee_002Db639_002D0242bccfc508/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="EventRepositoryTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=dd885f9e_002Db57f_002D41ee_002Db639_002D0242bccfc508/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EventRepositoryTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.EventRepositoryTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.RepositoryTests.UserRepositoryTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.AuthServiceTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.ServicesTests.EventServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::68A9B5E5-3E2D-4E2F-AFE3-4A902054421D::net8.0::Tests.UseCasesTests.CreateEventTest.Handle_ValidRequest_ShouldReturnResponse&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

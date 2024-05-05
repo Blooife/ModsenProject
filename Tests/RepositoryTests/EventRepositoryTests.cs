@@ -1,11 +1,9 @@
-using AutoMapper;
+
 using Domain.Models.Entities;
-using Domain.Repositories.Interfaces;
 using EFCore.Toolkit.Testing;
 using Infrastructure.Data;
 using Infrastructure.Repositories.Implementations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Moq;
 
 namespace Tests.RepositoryTests;

@@ -1,3 +1,4 @@
+using System.Net.NetworkInformation;
 using System.Text;
 using Api.Middleware;
 using Domain.Models.Entities;
@@ -46,7 +47,6 @@ public static class DependencyInjection
                 ClockSkew = TimeSpan.Zero
             };
         });
-        
         
         
         services.AddSwaggerGen(option =>
